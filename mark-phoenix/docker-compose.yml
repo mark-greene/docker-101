@@ -1,0 +1,34 @@
+version: '2'
+services:
+
+  database:
+    build:
+      context: ../mark-postgres
+      args:
+        POSTGRES_USER: mark
+        POSTGRES_PASSWORD: mark
+        POSTGRES_DATABASE: hello_phoenix_dev
+    image: mark-phoenix-db
+    ports:
+      - "5432:5432"
+
+  phoenix:
+    build: .
+    image: mark-phoenix
+    working_dir: /home/mark/sandbox
+    environment:
+      - MIX_ENV=dev
+    command: bash -c "cd hello_phoenix && mix phoenix.server"
+    volumes:
+      - ~/sandbox:/home/mark/sandbox
+    # network_mode: host
+    ports:
+      - "4000:4000"
+    depends_on:
+      - database
+
+# volumes:
+ # sandbox:
+ #    external: true
+
+# docker-compose run dev

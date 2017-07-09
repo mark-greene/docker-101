@@ -1,0 +1,16 @@
+version: '2'
+services:
+
+  rails:
+    build: .
+    image: mark-rails
+    volumes:
+      - ~/sandbox:/home/mark/sandbox
+    ports:
+      - "3000:3000"
+    network_mode: host
+
+# volumes:
+#  sandbox:
+
+# docker-compose run rails
